@@ -17,5 +17,15 @@ class Game {
   /// Конструктор
   Game(this.canvas, this.level) : isPaused = false;
 
-  // ------------------ Реализация ------------------
+  void keyPress(int wParam) {}
+
+  void timerUpdate() {
+    level.timerUpdate();
+  }
+
+  void pauseGame() {}
+
+  void repaint() {
+    level.drawBoard();
+  }
 }
