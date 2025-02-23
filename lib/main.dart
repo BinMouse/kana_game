@@ -6,8 +6,6 @@ import 'dart:io';
 import 'package:ffi/ffi.dart';
 import 'package:win32/win32.dart';
 
-// import './src/canvas.dart';
-
 // глобальные переменные
 // const PX_PER_BLOCK = 25; // Размер одной клетки в пикселях
 const SCREEN_WIDTH = 1600; // Ширина окна в пикселях
@@ -23,7 +21,7 @@ void main() {
 
   // Обработчик оконных сообщений создаёт объект, который можно передавать в WinAPI как функцию.
   final lpfnWndProc = NativeCallable<WNDPROC>.isolateLocal(
-    mainWindowProc,
+    MainWindowProc,
     exceptionalReturn: 0,
   );
 
@@ -76,7 +74,7 @@ void main() {
 }
 
 /// Функция обработки сообщений
-int mainWindowProc(int hwnd, int uMsg, int wParam, int lParam) {
+int MainWindowProc(int hwnd, int uMsg, int wParam, int lParam) {
   switch (uMsg) {
     case WM_DESTROY:
       PostQuitMessage(0);

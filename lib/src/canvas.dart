@@ -1,5 +1,8 @@
 ///Холст отрисовки
 class Canvas {
+  /// Перехватчик DC
+  final int hdc;
+
   /// Перехвадчик сообщений окна
   final int hwnd;
 
@@ -9,5 +12,10 @@ class Canvas {
   // Ширина холста
   final int width;
 
-  Canvas({required this.width, required this.height, required this.hwnd});
+  Canvas({
+    required this.hdc,
+    required this.hwnd,
+    required this.width,
+    required this.height,
+  });
 }

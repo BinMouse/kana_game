@@ -15,7 +15,7 @@ class Game {
   bool isPaused;
 
   /// Конструктор
-  Game(this.canvas) {}
+  Game(this.canvas, this.level) : isPaused = false;
 
   // ------------------ Реализация ------------------
 }
