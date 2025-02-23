@@ -1,5 +1,5 @@
 import "canvas.dart";
-import "Point.dart";
+import "point.dart";
 
 /// Интерфейс отрисовываемых объектов.
 ///
@@ -10,16 +10,16 @@ abstract class Drawable {
   Drawable(Point position) : _origin = position;
 
   /// Отрисовка объекта при помощи холста
-  void Draw(Canvas engine);
+  void draw(Canvas engine);
 
   /// Получить позицию объекта
   Point getPosition() => _origin;
 
   /// Задать новую точку позиции
-  void SetNewPositionPoint(Point newPosition) => _origin = newPosition;
+  void setNewPositionPoint(Point newPosition) => _origin = newPosition;
 
   /// Задать новые координаты
-  void Move(int X, int Y) {
+  void move(int X, int Y) {
     _origin.X = X;
     _origin.Y = Y;
   }

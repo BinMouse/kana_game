@@ -21,7 +21,7 @@ void main() {
 
   // Обработчик оконных сообщений создаёт объект, который можно передавать в WinAPI как функцию.
   final lpfnWndProc = NativeCallable<WNDPROC>.isolateLocal(
-    MainWindowProc,
+    mainWindowProc,
     exceptionalReturn: 0,
   );
 
@@ -74,7 +74,7 @@ void main() {
 }
 
 /// Функция обработки сообщений
-int MainWindowProc(int hwnd, int uMsg, int wParam, int lParam) {
+int mainWindowProc(int hwnd, int uMsg, int wParam, int lParam) {
   switch (uMsg) {
     case WM_DESTROY:
       PostQuitMessage(0);

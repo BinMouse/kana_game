@@ -26,12 +26,12 @@ abstract class Level {
 
   /// Функция обновления времени
   /// Обновления зависят от тикрейта игры
-  void TimerUpdate();
+  void timerUpdate();
 
   /// Прорисовка игральной доски
-  void DrawBoard() {
+  void drawBoard() {
     for (var element in board) {
-      element.Draw(engine);
+      element.draw(engine);
     }
   }
 
