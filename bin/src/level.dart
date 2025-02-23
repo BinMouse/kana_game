@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
-import 'package:win32/win32.dart';
+// import 'dart:ffi';
+// import 'package:win32/win32.dart';
 
 import 'canvas.dart';
 import 'drawable.dart';
@@ -8,7 +7,6 @@ import 'drawable.dart';
 /// Абстрактный класс игрового уровня. Содержит базовую реализацию, которую можно переопределить
 abstract class Level {
   // Отрисовываемые объекты
-  /// TODO: определить класс рисуемых объектов
   List<Drawable> board = [];
   Canvas engine;
 

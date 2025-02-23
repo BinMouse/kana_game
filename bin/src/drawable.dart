@@ -13,13 +13,13 @@ abstract class Drawable {
   void draw(Canvas engine);
 
   /// Получить позицию объекта
-  Point getPosition() => _origin;
+  Point get origin => _origin;
 
   /// Задать новую точку позиции
-  void setNewPositionPoint(Point newPosition) => _origin = newPosition;
+  void set updatePositionPoint(Point newPosition) => _origin = newPosition;
 
   /// Задать новые координаты
-  void move(int X, int Y) {
+  void moveTo(int X, int Y) {
     _origin.X = X;
     _origin.Y = Y;
   }
