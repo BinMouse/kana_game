@@ -1,21 +1,21 @@
-import 'package:win32/win32.dart';
+// import 'dart:ffi';
+// import 'package:win32/win32.dart';
 
 import 'canvas.dart';
-import 'idrawable.dart';
+import 'drawable.dart';
 
 /// Абстрактный класс игрового уровня. Содержит базовую реализацию, которую можно переопределить
 abstract class Level {
   // Отрисовываемые объекты
-  /// TODO: определить класс рисуемых объектов
-  List<IDrawable> board = []; // Список для хранения отрисовываемых объектов
-  Canvas engine; // Холст выступает отрисовщиком графики
+  List<Drawable> board = [];
+  Canvas engine;
 
   // Параметры уровня
-  int width; // Ширина
-  int height; // Высота
-  int lastTime; // Когда в последний раз обновился (нужен для поддержки стабильного фреймрейта)
+  int width;
+  int height;
+  int lastTime; // Когда в последний раз обновился
   late int currentTime; // текущее время дял обновления
-  int score; // Прогресс игрока
+  int score;
 
   ///TODO: разобраться с генерацией доски
   Level(this.engine, this.width, this.height)
@@ -25,5 +25,14 @@ abstract class Level {
   /// Функция обновления времени
   /// Обновления зависят от тикрейта игры
   void timerUpdate();
+
+  /// Прорисовка игральной доски
+  void drawBoard() {
+    for (var element in board) {
+      element.draw(engine);
+    }
+  }
+
+  /// Проверка на окончание игры
   bool get isGameOver;
 }
