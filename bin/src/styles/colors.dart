@@ -1,5 +1,0 @@
-import 'package:win32/win32.dart';
-
-int PRIMARY_GAME_COLOR = RGB(255, 255, 255);
-int SECONDARY_GAME_COLOR = RGB(150, 150, 150);
-int BACKGROUND_COLOR = RGB(0, 0, 0);

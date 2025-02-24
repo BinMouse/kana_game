@@ -8,7 +8,6 @@ import 'package:win32/win32.dart';
 import 'src/canvas.dart';
 import 'src/game.dart';
 import 'src/levels/menu.dart';
-import 'src/styles/colors.dart';
 
 //
 // ========================= Глобальные переменные =============================
@@ -46,7 +45,7 @@ void main() {
         ..ref.hInstance = hInstance // Передаём наш перехватчик
         ..ref.hIcon = LoadIcon(hInstance, IDI_APPLICATION) // Иконка
         ..ref.hCursor = LoadCursor(NULL, IDC_ARROW) // Курсор
-        ..ref.hbrBackground = GET_STOCK_OBJECT_FLAGS.GRAY_BRUSH // Цвет фона
+        ..ref.hbrBackground = GET_STOCK_OBJECT_FLAGS.DC_PEN // Цвет фона
         ..ref.lpszClassName = szAppName; // Имя окна
   RegisterClass(wc); // Регистрация класса окна
 
@@ -75,7 +74,6 @@ void main() {
 
   ShowWindow(hWnd, SHOW_WINDOW_CMD.SW_SHOWNORMAL);
   UpdateWindow(hWnd);
-
   // Запуск цикла обработки сообщений
   final msg = calloc<MSG>();
   while (GetMessage(msg, NULL, 0, 0) != 0) {
@@ -104,7 +102,6 @@ int mainWindowProc(int hwnd, int uMsg, int wParam, int lParam) {
       canvas = Canvas(hdc, hwnd, width, height);
       game = Game(canvas, Menu(canvas, width, height));
       SetTimer(hwnd, TIMER_ID, GAME_SPEED, nullptr);
-
     case WM_PAINT:
       hdc = BeginPaint(hwnd, ps);
       game.repaint();

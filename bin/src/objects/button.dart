@@ -2,6 +2,7 @@ import '../canvas.dart';
 import '../drawable.dart';
 import '../mixins/clickable_mixin.dart';
 import "../point.dart";
+import '../enums.dart';
 import 'package:win32/win32.dart';
 
 class Button extends Drawable with ClickableMixin {
@@ -17,9 +18,8 @@ class Button extends Drawable with ClickableMixin {
 
   @override
   void draw(Canvas engine) {
-    engine.drawRect(
-        super.origin.x, super.origin.y, _width, _height, RGB(255, 255, 255));
-    engine.drawText(text, super.origin.x + 19, super.origin.y + 18);
+    engine.drawRect(super.origin.x, super.origin.y, _width, _height, RGB(255, 255, 255));    
+    engine.drawText(text, super.origin.x + (_width/2).toInt(), super.origin.y + 10, alignmentX: ALIGNMENT.CENTER, fontSize: 30);
   }
 
   @override

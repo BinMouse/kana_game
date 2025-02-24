@@ -1,7 +1,8 @@
 import 'dart:ffi';
-
 import 'package:ffi/ffi.dart';
 import 'package:win32/win32.dart';
+
+import 'enums.dart';
 
 ///Холст отрисовки
 class Canvas {
@@ -39,7 +40,7 @@ class Canvas {
     SetViewportOrgEx(hdc, 0, 0, nullptr);
 
     // Set default colors
-    SetTextColor(hdc, RGB(0, 0, 0));
+    SetTextColor(hdc, RGB(255, 255, 255));
     SetBkColor(hdc, RGB(0, 0, 70));
     SetBkMode(hdc, BACKGROUND_MODE.TRANSPARENT);
   }
@@ -51,9 +52,54 @@ class Canvas {
     DeleteObject(hBrush);
   }
 
-  void drawText(String text, int x, int y) {
+  /// Функция отрисоки текста.
+  ///
+  /// Переменная [fontName] отвечает за шрифт.
+  /// Шрифт по умолчанию: "Pixel Operator Bold".
+  ///
+  /// Переменная[fontSize] отвечает за размер (высоту) шрифта.
+  /// Цвет по умолчанию: .
+  ///
+  /// Переменная[color] отвечает за цвет шрифта.
+  /// Цвет по умолчанию: RGB(255, 255, 255).
+  ///
+  /// Переменная [alignment] рекомендуется использовать RGB(r, g, b).
+  /// Цвет по умолчанию: RGB(255, 255, 255).
+  void drawText(String text, int x, int y,{int? color, String? fontName, int? fontSize, int? alignmentX = ALIGNMENT.LEFT}) {
+    
+    // Настройка шрифта
+    SetTextColor(hdc, color??=RGB(0, 0, 0));
+    Pointer<LOGFONT> pfont = calloc<LOGFONT>();
+    pfont.ref.lfHeight = fontSize??=24;
+    pfont.ref.lfFaceName = fontName ??= "Press Start 2P";
+    pfont.ref.lfQuality = FONT_QUALITY.NONANTIALIASED_QUALITY;
+    int nFont = CreateFontIndirect(pfont);
+    SelectObject(hdc, nFont);
+
+    switch (alignmentX) {
+      case (ALIGNMENT.CENTER):
+        x = x - (getTextLengthInPixels(text) / 2).toInt();
+        break;
+      case (ALIGNMENT.RIGHT):
+        x = x - getTextLengthInPixels(text);
+        break;
+    }
+
     final lpString = text.toNativeUtf16();
     TextOut(hdc, x, y, lpString, text.length);
+
+    // Очистка паяти и сброс настроек
+    SetTextColor(hdc, RGB(255, 255, 255));
+    DeleteObject(nFont);
     free(lpString);
+    free(pfont);
+  }
+
+  int getTextLengthInPixels(String text) {
+    int mw = 0;
+    Pointer<TEXTMETRIC> lptm = calloc<TEXTMETRIC>();
+    GetTextMetrics(hdc, lptm);
+    mw = lptm.ref.tmMaxCharWidth;
+    return text.runes.length * mw;
   }
 }
