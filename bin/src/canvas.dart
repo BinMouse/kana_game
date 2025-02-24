@@ -34,8 +34,8 @@ class Canvas {
 
     // Установка системы координат
     SetMapMode(hdc, HDC_MAP_MODE.MM_ISOTROPIC);
-    SetWindowExtEx(hdc, 1600, 900, nullptr);
-    SetViewportExtEx(hdc, 1600, 900, nullptr);
+    SetWindowExtEx(hdc, width, height, nullptr);
+    SetViewportExtEx(hdc, width, height, nullptr);
     SetViewportOrgEx(hdc, 0, 0, nullptr);
 
     // Set default colors

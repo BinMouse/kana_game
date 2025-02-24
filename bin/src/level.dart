@@ -1,8 +1,5 @@
 import 'canvas.dart';
 import 'drawable.dart';
-import 'point.dart';
-
-import "objects/button.dart";
 
 /// Абстрактный класс игрового уровня. Содержит базовую реализацию, которую можно переопределить
 abstract class Level {

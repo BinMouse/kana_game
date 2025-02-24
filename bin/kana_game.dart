@@ -10,18 +10,23 @@ import 'src/game.dart';
 import 'src/levels/menu.dart';
 import 'src/styles/colors.dart';
 
-// глобальные переменные
+//
+// ========================= Глобальные переменные =============================
+//
 const SCREEN_WIDTH = 1600; // Ширина окна в пикселях
 const SCREEN_HEIGHT = 900; // Высота окна в пикселях
 const GAME_SPEED = 33; // Тикрейт игры (обновление каждые 33 мс)
-const TIMER_ID = 1; // Идентификатор таймера
-late Game game;
-late Canvas canvas;
+const TIMER_ID = 1; // Идентификатор глобального таймера
+late Game game; // объект игры
+late Canvas canvas; // объект-отрисовщик
 
 // Получаем перехватчик для текущего процесса
 final hInstance = GetModuleHandle(nullptr);
 
-/// Точка входа в программу
+//
+// ============================ Старт программы ================================
+//
+
 void main() {
   final szAppName = 'Kana Game'.toNativeUtf16(); // Имя окна (нужно для WinAPI)
 
@@ -54,8 +59,9 @@ void main() {
         WINDOW_STYLE.WS_SYSMENU |
         WINDOW_STYLE.WS_MAXIMIZEBOX |
         WINDOW_STYLE.WS_CAPTION, // Стиль окна
-    0, 0, // позиция окна
-    SCREEN_WIDTH, SCREEN_HEIGHT, // размеры окна
+    0, 0, // Позиция окна
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT,
     NULL, NULL,
     hInstance, // Дескриптор
     nullptr,
@@ -89,13 +95,14 @@ int mainWindowProc(int hwnd, int uMsg, int wParam, int lParam) {
   switch (uMsg) {
     case WM_CREATE:
       hdc = GetDC(hwnd);
-      Pointer<RECT> rectptr = calloc<RECT>();
-      GetClientRect(hwnd, rectptr);
-      int clHeigth = rectptr.ref.bottom - rectptr.ref.top;
-      int clWidth = rectptr.ref.right - rectptr.ref.left;
+      final clientArea = calloc<RECT>();
+      GetClientRect(hwnd, clientArea);
+      int width = clientArea.ref.right - clientArea.ref.left;
 
-      canvas = Canvas(hdc, hwnd, SCREEN_WIDTH, SCREEN_HEIGHT);
-      game = Game(canvas, Menu(canvas, SCREEN_WIDTH, SCREEN_HEIGHT));
+      int height = clientArea.ref.bottom - clientArea.ref.top;
+
+      canvas = Canvas(hdc, hwnd, width, height);
+      game = Game(canvas, Menu(canvas, width, height));
       SetTimer(hwnd, TIMER_ID, GAME_SPEED, nullptr);
 
     case WM_PAINT:
