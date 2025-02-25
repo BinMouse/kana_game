@@ -1,11 +1,12 @@
 import '../canvas.dart';
 import '../drawable.dart';
-import '../mixins/clickable_mixin.dart';
+import '../mixins/mClickable.dart';
 import "../point.dart";
 import '../enums.dart';
 import 'package:win32/win32.dart';
 
-class Button extends Drawable with ClickableMixin {
+/// Класс кнопки
+class Button extends Drawable with MClickable {
   int width;
   int height;
   late int textColor;
@@ -18,6 +19,7 @@ class Button extends Drawable with ClickableMixin {
     this.bgColor = bgColor ??= RGB(255, 255, 255);
   }
 
+  // отрисовка объекта
   @override
   void draw(Canvas engine) {
     engine.drawRect(
@@ -30,11 +32,18 @@ class Button extends Drawable with ClickableMixin {
         alignmentY: ALIGNMENT.CENTER);
   }
 
+  // Проверкана принадлежность точки к области кнопки
   @override
   bool isPointInside(Point point) {
     return point.x >= super.origin.x &&
         point.x <= super.origin.x + width &&
         point.y >= super.origin.y &&
         point.y <= super.origin.y + height;
+  }
+
+  // Событие нажатия
+  @override
+  void onClick() {
+    // TODO: implement onClick
   }
 }

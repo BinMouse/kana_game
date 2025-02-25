@@ -1,6 +1,7 @@
-import "point.dart";
+import '../point.dart';
 
-abstract class Clickable {
+// Миксин для внедрения функционала нажимаемого объекта
+mixin MClickable {
   /// Проверка на принадлежность точки
   bool isPointInside(Point point);
 

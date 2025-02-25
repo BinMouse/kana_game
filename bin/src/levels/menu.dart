@@ -2,6 +2,7 @@ import '../level.dart';
 import '../objects/button.dart';
 import '../point.dart';
 
+// Класс главного меню. Описывает первый экран игры
 class Menu extends Level {
   Menu(super.engine, super.width, super.height) {
     // пробы
@@ -12,6 +13,7 @@ class Menu extends Level {
     super.board.add(Button(
         Point((width / 2).toInt() + 20, (height / 2).toInt() - (botWidth/2).toInt()), "Exit", width: botWidth, height: botHeig));
   }
+  
   @override
   bool get isGameOver => false;
 
