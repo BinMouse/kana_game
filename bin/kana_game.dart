@@ -12,7 +12,9 @@ import 'src/levels/menu.dart';
 //
 // ========================= Глобальные переменные =============================
 //
-const SCREEN_WIDTH = 1600; // Ширина окна в пикселях
+const fontsrc = "/assets/fonts/joystix.otf";
+
+const SCREEN_WIDTH = 1200; // Ширина окна в пикселях
 const SCREEN_HEIGHT = 900; // Высота окна в пикселях
 const GAME_SPEED = 33; // Тикрейт игры (обновление каждые 33 мс)
 const TIMER_ID = 1; // Идентификатор глобального таймера
@@ -45,7 +47,7 @@ void main() {
         ..ref.hInstance = hInstance // Передаём наш перехватчик
         ..ref.hIcon = LoadIcon(hInstance, IDI_APPLICATION) // Иконка
         ..ref.hCursor = LoadCursor(NULL, IDC_ARROW) // Курсор
-        ..ref.hbrBackground = GET_STOCK_OBJECT_FLAGS.DC_PEN // Цвет фона
+        ..ref.hbrBackground = CreateSolidBrush(RGB(0, 0, 0))
         ..ref.lpszClassName = szAppName; // Имя окна
   RegisterClass(wc); // Регистрация класса окна
 
@@ -88,11 +90,16 @@ void main() {
 /// Функция обработки сообщений
 int mainWindowProc(int hwnd, int uMsg, int wParam, int lParam) {
   int hdc;
-  final ps = calloc<PAINTSTRUCT>();
+  final ps = calloc<PAINTSTRUCT>();  
 
+  // Перехват сообщений (событий)
   switch (uMsg) {
+    // Когда создано окно
     case WM_CREATE:
       hdc = GetDC(hwnd);
+
+      AddFontResource(fontsrc.toNativeUtf16()); // Добавление шрифта из ассетов в систему
+
       final clientArea = calloc<RECT>();
       GetClientRect(hwnd, clientArea);
       int width = clientArea.ref.right - clientArea.ref.left;
@@ -102,11 +109,14 @@ int mainWindowProc(int hwnd, int uMsg, int wParam, int lParam) {
       canvas = Canvas(hdc, hwnd, width, height);
       game = Game(canvas, Menu(canvas, width, height));
       SetTimer(hwnd, TIMER_ID, GAME_SPEED, nullptr);
+
+    // Когда запускается отрисовка
     case WM_PAINT:
       hdc = BeginPaint(hwnd, ps);
       game.repaint();
       EndPaint(hwnd, ps);
 
+    // Когда закрывается окно
     case WM_DESTROY:
       KillTimer(hwnd, TIMER_ID);
       PostQuitMessage(0);

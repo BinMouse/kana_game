@@ -33,5 +33,5 @@ class Point {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Point && other.x == x && other.y == y;
-  }
+  }  
 }

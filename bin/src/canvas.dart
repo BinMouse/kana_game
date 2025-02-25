@@ -54,27 +54,36 @@ class Canvas {
 
   /// Функция отрисоки текста.
   ///
-  /// Переменная [fontName] отвечает за шрифт.
+  /// [fontName] - отвечает за шрифт.
   /// Шрифт по умолчанию: "Pixel Operator Bold".
   ///
-  /// Переменная[fontSize] отвечает за размер (высоту) шрифта.
-  /// Цвет по умолчанию: .
+  /// [fontSize] - отвечает за размер (высоту) шрифта.
+  /// Размер по умолчанию: .
   ///
-  /// Переменная[color] отвечает за цвет шрифта.
-  /// Цвет по умолчанию: RGB(255, 255, 255).
-  ///
-  /// Переменная [alignment] рекомендуется использовать RGB(r, g, b).
-  /// Цвет по умолчанию: RGB(255, 255, 255).
-  void drawText(String text, int x, int y,{int? color, String? fontName, int? fontSize, int? alignmentX = ALIGNMENT.LEFT}) {
+  /// [alignmentX] - выравнивание по горизонтали.
+  /// По умолчанию: LEFT.
+  /// 
+  /// [alignmentY] - выравнивание по вертикали.
+  /// По умолчанию: LEFT.
+  void drawText(String text, int x, int y, {int? color, int? fontSize, String? fontName, int? alignmentX = ALIGNMENT.LEFT, int? alignmentY = ALIGNMENT.LEFT}) {
     
     // Настройка шрифта
-    SetTextColor(hdc, color??=RGB(0, 0, 0));
+    SetTextColor(hdc, color??=APP_COLORS.PRIMARY_GAME_COLOR);
     Pointer<LOGFONT> pfont = calloc<LOGFONT>();
-    pfont.ref.lfHeight = fontSize??=24;
-    pfont.ref.lfFaceName = fontName ??= "Press Start 2P";
+    pfont.ref.lfHeight = fontSize ??= 24;
+    pfont.ref.lfFaceName = fontName ??= "Joystix Monospace";
     pfont.ref.lfQuality = FONT_QUALITY.NONANTIALIASED_QUALITY;
     int nFont = CreateFontIndirect(pfont);
     SelectObject(hdc, nFont);
+
+    switch (alignmentY) {
+      case (ALIGNMENT.CENTER):
+        y = y - (fontSize / 2).toInt();
+        break;
+      case (ALIGNMENT.RIGHT):
+        y = y - fontSize;
+        break;
+    }
 
     switch (alignmentX) {
       case (ALIGNMENT.CENTER):
