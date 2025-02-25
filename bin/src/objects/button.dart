@@ -1,12 +1,12 @@
 import '../canvas.dart';
-import '../drawable.dart';
-import '../mixins/mClickable.dart';
 import "../point.dart";
 import '../enums.dart';
+import 'widget.dart';
 import 'package:win32/win32.dart';
 
+
 /// Класс кнопки
-class Button extends Drawable with MClickable {
+class Button extends Widget {
   int width;
   int height;
   late int textColor;
@@ -22,10 +22,14 @@ class Button extends Drawable with MClickable {
   // отрисовка объекта
   @override
   void draw(Canvas engine) {
-    engine.drawRect(
-        super.origin.x, super.origin.y, width, height, RGB(255, 255, 255));
-    engine.drawText(text, super.origin.x + (width / 2).toInt(),
-        super.origin.y + (height / 2).toInt(),
+
+    // Отрисовка границы
+    engine.drawRect(origin.x, origin.y, width, height, RGB(255, 255, 255));
+    
+    // Текст кнопки
+    engine.drawText(text, 
+        origin.x + (width / 2).toInt(),
+        origin.y + (height / 2).toInt(),
         fontSize: 35,
         color: RGB(0, 0, 0),
         alignmentX: ALIGNMENT.CENTER,
@@ -35,10 +39,10 @@ class Button extends Drawable with MClickable {
   // Проверкана принадлежность точки к области кнопки
   @override
   bool isPointInside(Point point) {
-    return point.x >= super.origin.x &&
-        point.x <= super.origin.x + width &&
-        point.y >= super.origin.y &&
-        point.y <= super.origin.y + height;
+    return point.x >= origin.x &&
+        point.x <= origin.x + width &&
+        point.y >= origin.y &&
+        point.y <= origin.y + height;
   }
 
   // Событие нажатия
