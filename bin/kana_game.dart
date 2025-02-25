@@ -12,7 +12,7 @@ import 'src/levels/menu.dart';
 //
 // ========================= Глобальные переменные =============================
 //
-const fontsrc = "/assets/fonts/joystix.otf";
+const fontsrc = "./assets/fonts/joystix.otf";
 
 const SCREEN_WIDTH = 1200; // Ширина окна в пикселях
 const SCREEN_HEIGHT = 900; // Высота окна в пикселях

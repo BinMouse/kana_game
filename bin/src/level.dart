@@ -1,10 +1,10 @@
 import 'canvas.dart';
-import 'drawable.dart';
+import 'objects/widget.dart';
 
 /// Абстрактный класс игрового уровня. Содержит базовую реализацию, которую можно переопределить
 abstract class Level {
   // Отрисовываемые объекты
-  List<Drawable> board = [];
+  List<Widget> board = [];
   Canvas engine;
 
   // Параметры уровня
